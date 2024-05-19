@@ -28,7 +28,8 @@ library(ggrepel)
 
 `1. (2 points)
 ```{r}
-
+ seattlepets %>%
+distinct (species)
 ```
 Write your narrative here
 
@@ -38,7 +39,8 @@ Write your narrative here
 `2. (2 points)
 
 ```{r}
-
+seattlepets %>%
+  ncol()
 ```
 Write your narrative below
 
@@ -46,13 +48,18 @@ Write your narrative below
 
 `3. (2 points)
 ```{r}
-
+seattlepets %>%
+select (species) %>%
+  count(species , sort = TRUE)
 ```
 Write your narrative here
 
 
 `4. (2 points)
 ```{r}
+seattlepets %>% 
+  select(animal_name) %>%
+  count(animal_name , sort = TRUE)
 
 ```
 Write your narrative here
@@ -60,7 +67,9 @@ Write your narrative here
 
 `5. (2 points)
 ```{r}
-
+seattlepets %>%
+filter(species == "Pig") %>%
+  arrange(animal_name)
 ```
 Write your narrative here
 
@@ -69,7 +78,10 @@ Write your narrative here
 
 `6. (2 points)
 ```{r}
-
+seattlepets %>%
+  filter(species == "Goat") %>%
+  select(animal_name , primary_breed) %>%
+  arrange(animal_name)
 ```
 Write your narrative here
 
@@ -79,7 +91,10 @@ Write your narrative here
 
 `7. (2 points)
 ```{r}
-
+seattlepets %>%
+  mutate(pet = animal_name , species) %>%
+  select(license_number , pet) %>%
+  arrange(pet)
 ```
 Write your narrative here
 
@@ -87,7 +102,8 @@ Write your narrative here
 
 `8. (2 points)
 ```{r}
-
+ggplot(seattlepets,aes(x=species))+
+  geom_bar();
 ```
 Write your narrative here
 
@@ -102,12 +118,25 @@ filter(animal_name %in% c( "Lucy"  , "Charlie" , "Luna" , "Bella" , "Max"    ,
 top_10_names
 ```
 `a.	What does the above code chunk do?
+The code performs the following actions:
 
+1. **Selecting Popular Pet Names:**
+   - It filters the `animal_name` column in the `seattlepets` data frame to include only rows where the pet's name is one of the specified names: ("Lucy", "Charlie", "Luna", "Bella", "Max", "Daisy", "Molly", "Jack", "Lily", "Stella").
+
+2. **Creating a New Data Frame:**
+   - The filtered result is stored in a new data frame called `top_10_names`.
+
+In summary, the code filters the `seattlepets` data frame to include only the rows with the ten specified pet names and stores this filtered data in `top_10_names`.
 
 
 `b. Plot the counts of the pet names (animal_name) in top_10_names
 ```{r}
-
+seattlepets %>%
+  filter(animal_name %in% c( "Lucy"  , "Charlie" , "Luna" , "Bella" , "Max"    , 
+                           "Daisy" , "Molly"   , "Jack" , "Lily"  , "Stella" )) %>%
+  ggplot(aes(animal_name , 
+             fill = species)) + 
+  geom_bar()
 ```
 
 
@@ -166,10 +195,10 @@ ggplot(comb_name_props, aes(x = cat_prop, y = dog_prop)) +
 `What names are more common for cats than dogs? The ones above the line or the ones below the line?
 
 `Answer here..................
-
+ **The names listed below the line are more common for cats than for dogs.**
 
 
 `Is the relationship between the two variables (proportion of cats with a given name and proportion of dogs with a given name) positive or negative? What does this mean in context of the data?
 
 `Answer here .............
-
+**The relationship between the two variables is positive, meaning that as the proportion of cats with a given name increases, the proportion of dogs with the same name also tends to increase.**
